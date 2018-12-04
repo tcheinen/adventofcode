@@ -4,15 +4,13 @@ grid = defaultdict(int)
 answer_1 = 0
 answer_2 = -1
 def parse(data):
-    x,y = [int(x) for x in line[line.find("@ ")+2:line.find(": ")].split(",")]
-    w,h = [int(x) for x in line[line.find(": ")+2:].split("x")]
-    id =  line[line.find("#")+1:line.find(" @ ")]
+    x,y = [int(x) for x in data[data.find("@ ")+2:data.find(": ")].split(",")]
+    w,h = [int(x) for x in data[data.find(": ")+2:].split("x")]
+    id =  data[data.find("#")+1:data.find(" @ ")]
     return (id, x, y, w, h)
 
 with open("input.txt") as f:
-    suits = []
-    for line in f:
-        suits.append(parse(line))
+    suits = [parse(x) for x in f.readlines()]
     for suit in suits:
         id, x, y, w, h = suit    
         for i in range(w):
@@ -31,5 +29,6 @@ with open("input.txt") as f:
 for i in grid.values():
     if(i > 1):
         answer_1 += 1
+        
 print("Answer 1: " + str(answer_1))
 print("Answer 2: " + str(answer_2))
